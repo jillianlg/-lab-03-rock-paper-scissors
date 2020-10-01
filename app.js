@@ -1,108 +1,83 @@
+const message = document.querySelector('.message');
+const score = document.querySelector('.score');
+const buttons = document.querySelectorAll('button');
+const winnerScores = [0, 0];
 
-window.onload = function() {
 
-    let userScore = 0;
-    let compScore = 0;
-    let userScore_span = document.querySelector('#user-score');
-    let compScore_span = document.querySelector('#comp-score');
-    let scoreBoard_div = document.querySelector('.score-board');
-    let result_p = document.querySelector('.result > p');
-    let rock_div = document.querySelector('#rock');
-    let paper_div = document.querySelector('#paper');
-    let scissors_div = document.querySelector('#scissors');
-    
-    
-    function getComputerChoice() {
-        let choices = ['rock', 'paper', 'scissors'];
-        let randomNumber = Math.floor(Math.random() * 3);
-        return choices[randomNumber];
+for (let i = 0 ; i < buttons.length ; i++){
+    buttons[i].addEventListener('click', getRandomThrow);
+}
+
+function getRandomThrow(e){
+ 
+    let playerSelection = e.target.innerText;
+    let computerSelection = Math.random();
+
+ 
+    if (computerSelection < .34){
+        computerSelection = 'Rock';
+    } else if (computerSelection <= .67){
+        computerSelection = 'Paper';
+    } else {
+        computerSelection = 'Scissors';
     }
     
-    function convertWord(word) {
-        switch (word) {
-            case 'rock':
-                return 'Rock';
-            case 'paper':
-                return 'Paper';
-            case 'scissors':
-                return 'Scissors';
+   
+    let result = didUserWin(playerSelection, computerSelection);
+    if (result === 'Player'){
+        result += ' wins!';
+        winnerScores[0]++;
+    }
+
+    if (result === 'Computer'){
+        result += ' wins!';
+        winnerScores[1]++;
+    }
+
+    if (result === 'Draw'){
+        result += '. It\'s a tie!';
+    }
+
+  
+    score.innerHTML = 'Player: [ ' + winnerScores[0] + ' ] Computer: [ ' + winnerScores[1] + ' ]';
+
+    messenger('Player: <strong>' + playerSelection + '</strong> Computer: <strong>' + computerSelection + '</strong><br>' + result);
+}
+
+function messenger(selectionMessage){
+    message.innerHTML = selectionMessage;
+}
+
+function didUserWin(player, computer){
+    if (player === computer){
+        return 'Draw';
+    }
+
+    if (player === 'Rock'){
+        if (computer === 'Paper'){
+            return 'Computer';
+        } else {
+            return 'Player';
         }
     }
-    
-    function win(user, comp) {
-        userScore++;
-        userScore_span.innerHTML = userScore;
-        compScore_span.innerHTML = compScore;
-        let smallUserWord = 'user'.fontsize(3).sub();
-        let smallCompWord = 'comp'.fontsize(3).sub();
-        let userChoice_div = document.getElementById(user);
-        result_p.innerHTML = convertWord(user) + smallUserWord + ' beats ' +
-                                 comp + smallCompWord + '. You win. 🔥';
-        userChoice_div.classList.add('green-glow');
-        setTimeout(function() {userChoice_div.classList.remove('green-glow');}, 800);
-    }
-    
-    function lose(user, comp) {
-        compScore++;
-        userScore_span.innerHTML = userScore;
-        compScore_span.innerHTML = compScore;
-        let smallUserWord = 'user'.fontsize(3).sub();
-        let smallCompWord = 'comp'.fontsize(3).sub();
-        let userChoice_div = document.getElementById(user);
-        result_p.innerHTML = convertWord(user) + smallUserWord + ' loses to ' +
-                                 comp + smallCompWord + '. You lost. 💩';
-        userChoice_div.classList.add('red-glow');
-        setTimeout(function() {userChoice_div.classList.remove('red-glow');}, 800);
-    }
-    
-    function draw(user, comp) {
-        let smallUserWord = 'user'.fontsize(3).sub();
-        let smallCompWord = 'comp'.fontsize(3).sub();
-        let userChoice_div = document.getElementById(user);
-        result_p.innerHTML = convertWord(user) + smallUserWord + ' draws with ' +
-                                 comp + smallCompWord + '.';
-        userChoice_div.classList.add('gray-glow');
-        setTimeout(function() {userChoice_div.classList.remove('gray-glow');}, 800);
-    }
-    
-    function game(userChoice) {
-        let compChoice = getComputerChoice();
-        switch (userChoice + compChoice) {
-            case 'rockscissors':
-            case 'paperrock':
-            case 'scissorspaper':
-                win(userChoice, compChoice);
-                break;
-            case 'rockpaper':
-            case 'paperscissors':
-            case 'scissorsrock':
-                lose(userChoice, compChoice);
-                break;
-            case 'rockrock':
-            case 'paperpaper':
-            case 'scissorsscissors':
-                draw(userChoice, compChoice);
-                break;
+
+    if (player === 'Paper'){
+        if (computer === 'Scissors'){
+            return 'Computer';
+        } else {
+            return 'Player';
         }
     }
-    
-    
-    
-    function main() {
-        rock_div.addEventListener('click', function() {
-            game('rock');
-        });
-    
-        paper_div.addEventListener('click', function() {
-            game('paper');
-        });
-    
-        scissors_div.addEventListener('click', function() {
-            game('scissors');
-        });
-       
+
+    if (player === 'Scissors'){
+        if (computer === 'Rock'){
+            return 'Computer';
+        } else {
+            return 'Player';
+        }
     }
-    
-    main();
-    
-};
+}
+/*function clear()
+{
+    document.getElementById("myForm").reset();
+}*/

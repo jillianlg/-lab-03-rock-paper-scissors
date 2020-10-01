@@ -1,0 +1,10 @@
+body{
+    background-color: black;
+    color:whitesmoke;
+    font-family: 'Sansita Swashed', cursive;
+    font-size: xx-large;
+    text-align: center;
+}
+button[type="botton"]:checked + img {
+    border: solid 5px blue;
+}
