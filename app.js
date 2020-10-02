@@ -1,3 +1,5 @@
+import { getRandomThrow, didUserWin } from '../utils.js';
+
 const message = document.querySelector('.message');
 const score = document.querySelector('.score');
 const buttons = document.querySelectorAll('button');
@@ -6,6 +8,8 @@ const winnerScores = [0, 0];
 
 for (let i = 0 ; i < buttons.length ; i++){
     buttons[i].addEventListener('click', getRandomThrow);
+
+    let result = didUserWin(playerSelection, computerSelection);
     
     if (result === 'Player'){
         result += ' wins!';

@@ -14,35 +14,30 @@ export function getRandomThrow(){ //removed the (e) for testing
     return computerSelection;
 }
 
-// function didUserWin(player, computer){
+export function didUserWin(player, computer){
 
-//     let result = didUserWin(playerSelection, computerSelection);
+    if (player === computer){
+        return 'Draw';
+    }
 
-//     if (player === computer){
-//         return 'Draw';
-//     }
-
-//     if (player === 'Rock'){
-//         if (computer === 'Paper'){
-//             return 'Computer';
-//         } else {
-//             return 'Player';
-//         }
-//     }
-
-//     if (player === 'Paper'){
-//         if (computer === 'Scissors'){
-//             return 'Computer';
-//         } else {
-//             return 'Player';
-//         }
-//     }
-
-//     if (player === 'Scissors'){
-//         if (computer === 'Rock'){
-//             return 'Computer';
-//         } else {
-//             return 'Player';
-//         }
-//     }
-// }
+    if (player === 'Rock' && computer === 'Paper'){
+            return 'Computer';
+        }
+    }
+// Finish fixing code below
+    if (player === 'Paper'){
+        if (computer === 'Scissors'){
+            return 'Computer';
+        } else {
+            return 'Player';
+        }
+    }
+// Finish fixing code below
+    if (player === 'Scissors'){
+        if (computer === 'Rock'){
+            return 'Computer';
+        } else {
+            return 'Player';
+        }
+    }
+}
